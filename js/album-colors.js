@@ -22,25 +22,34 @@ $( window ).load(function() {
 		searchAlbums(userQuery);
 	});
 
+	var currentAlbum = new Object;
 
 	function getAlbumCovers(data) {
+			console.log(data);
 			for (var i = 0; i < 15; i++) {
-				currentAlbum = data.albums.items[i].images[1].url;
+				currentAlbum[i] = data.albums.items[i];
+				console.log(currentAlbum[i]);
+				currentAlbum.cover = data.albums.items[i].images[1].url;
+				console.log(currentAlbum.cover);
+				currentAlbum.num = data.albums.items[i].id;
+				console.log(currentAlbum.num);
 
 				if (i > 0) {
-					if (previousAlbum == currentAlbum) {
+					if (previousAlbum == currentAlbum[i]) {
 					}
 					else {
-						albumImgUrlArray.push(currentAlbum)
-						previousAlbum = currentAlbum;
+						albumImgUrlArray.push([currentAlbum.cover, currentAlbum.num])
+						previousAlbum = currentAlbum[i];
 					}
 				}
 				else {
-					albumImgUrlArray.push(currentAlbum);
-					previousAlbum = currentAlbum;
+					albumImgUrlArray.push([currentAlbum.cover, currentAlbum.num]);
+					previousAlbum = currentAlbum[i];
 				}
 			}
 			
+			console.log(albumImgUrlArray);
+			console.log(albumImgUrlArray.length);
 			loadAlbumImg(albumImgUrlArray);
 
 	}
@@ -53,7 +62,7 @@ $( window ).load(function() {
 
 		for (var j = 0; j < array.length; j++) {
 			var img = new Image;
-			var src = array[j]; // insert image url here
+			var src = array[j][0]; // insert image url here
 
 			img.crossOrigin = "Anonymous";
 
@@ -101,7 +110,7 @@ $( window ).load(function() {
 		};
 
 		$('.img-color').click(function() {
-			displaySongs();
+			getSongs();
 			// $('.img-container').fadeIn(200);
 		});
 
@@ -112,7 +121,7 @@ $( window ).load(function() {
 
 	};
 
-	function displaySongs() {
+	function getSongs() {
 
 	}
 
