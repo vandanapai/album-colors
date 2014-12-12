@@ -11,7 +11,6 @@ $( window ).load(function() {
 				type: 'album'
 			},
 			success: function(albums) {
-				console.log(albums);
 				getAlbumCovers(albums);
 			}
 		});
@@ -23,13 +22,6 @@ $( window ).load(function() {
 		searchAlbums(userQuery);
 	});
 
-
-	// $.ajax ({
-	// 	type: "GET",
-	// 	dataType: "json",
-	// 	cache: false,
-	// 	url: "https://api.spotify.com/v1/artists/04gDigrS5kc9YWfZHwBETP/albums?market=US&album_type=album&limit=40",
-	// 	success: function(data) {
 
 	function getAlbumCovers(data) {
 			for (var i = 0; i < 15; i++) {
@@ -48,12 +40,11 @@ $( window ).load(function() {
 					previousAlbum = currentAlbum;
 				}
 			}
-
-			console.log(albumImgUrlArray);
+			
 			loadAlbumImg(albumImgUrlArray);
 
-		}
-	// });
+	}
+
 
 	var images = [];
 	var numImgLoaded = 0;
