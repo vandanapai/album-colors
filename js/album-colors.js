@@ -25,14 +25,11 @@ $( window ).load(function() {
 	var currentAlbum = new Object;
 
 	function getAlbumCovers(data) {
-			console.log(data);
 			for (var i = 0; i < 15; i++) {
 				currentAlbum[i] = data.albums.items[i];
-				console.log(currentAlbum[i]);
 				currentAlbum.cover = data.albums.items[i].images[1].url;
-				console.log(currentAlbum.cover);
 				currentAlbum.num = data.albums.items[i].id;
-				console.log(currentAlbum.num);
+
 
 				if (i > 0) {
 					if (previousAlbum == currentAlbum[i]) {
@@ -47,9 +44,7 @@ $( window ).load(function() {
 					previousAlbum = currentAlbum[i];
 				}
 			}
-			
-			console.log(albumImgUrlArray);
-			console.log(albumImgUrlArray.length);
+
 			loadAlbumImg(albumImgUrlArray);
 
 	}
@@ -63,8 +58,11 @@ $( window ).load(function() {
 		for (var j = 0; j < array.length; j++) {
 			var img = new Image;
 			var src = array[j][0]; // insert image url here
+			var num = "num";
+			var albumId = array[j][1];
 
 			img.crossOrigin = "Anonymous";
+			img.num = albumId;
 
 			img.onload = function() {
 				counter();
@@ -91,8 +89,7 @@ $( window ).load(function() {
 
 			var imgObject = data[k];
 
-
-			$('#mainContainer').append('<div id="colorContainer' + k + '">TESTING' + k + '</div>'); // create a new square div for the color
+			$('#mainContainer').append('<div id="colorContainer' + k + '"></div>'); // create a new square div for the color
 
 			$('#colorContainer' + k).addClass('img-color').append('<div id="albumContainer' + k + '"></div>');
 
@@ -104,13 +101,13 @@ $( window ).load(function() {
 
 			$('.songContainer').css('background-color', 'rgb(' + domColor[0] + ',' + domColor[1] + ',' + domColor[2] + ')'); // load dom color bg for modal
 
-			$('#albumContainer' + k).addClass('album-img-wrapper').append('<img src="' + imgObject.src + '"></img>');
+			$('#albumContainer' + k).addClass('album-img-wrapper').append('<img src="' + imgObject.src + '" title="' + imgObject.num + '"></img>');
 			// $('.loaded-img').prepend(imgObject);
 
 		};
 
-		$('.img-color').click(function() {
-			getSongs();
+		$('img').click(function() {
+			getSongs(this.title);
 			// $('.img-container').fadeIn(200);
 		});
 
@@ -121,7 +118,8 @@ $( window ).load(function() {
 
 	};
 
-	function getSongs() {
+	function getSongs(id) {
+
 
 	}
 
