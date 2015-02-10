@@ -1,6 +1,17 @@
+*,
+*:after,
+*:before {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; 
+    }
+
 .container {
 	height: 100%;
 	width: 100%;
+	margin: 0 auto;
 }
 
 .img-color {
@@ -13,6 +24,13 @@
    -moz-transition: opacity .25s ease-in-out;
    -webkit-transition: opacity .25s ease-in-out;
 }
+
+.img-color:after {
+	content: '';
+	display:inline-block;
+	width: 100%;
+}
+
 
 
 .img-color:hover {
