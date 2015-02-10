@@ -2,15 +2,30 @@ $( window ).load(function() {
 
 	var albumImgUrlArray = [];
 
-	function searchAlbums(query) {
+	function searchArtist(query) {
 		$.ajax ({
 			type: "GET",
 			url: "https://api.spotify.com/v1/search",
 			data: {
 				q: query,
-				type: 'album'
+				type: 'artist'
 			},
-			success: function(albums) {
+			success: function(results) {
+				console.log(results);
+				var artistID = results.artists.items[0].id;
+				console.log(artistID);
+				getArtistAlbums(artistID);
+			}
+		});
+	};
+
+	function getArtistAlbums(id) {
+		$.ajax ({
+			type: "GET",
+			url: "https://api.spotify.com/v1/artists/" + id + "/albums?album_type=album&market=US",
+			dataType: "JSON",
+			success: function (albums) {
+				console.log(albums);
 				getAlbumCovers(albums);
 			}
 		});
@@ -19,26 +34,20 @@ $( window ).load(function() {
 	$('form').submit(function (event) {
 		event.preventDefault();
 		var userQuery = $('.search-query').val();
-		searchAlbums(userQuery);
+		searchArtist(userQuery);
 	});
 
 	var currentAlbum = new Object;
 
 	function getAlbumCovers(data) {
-			for (var i = 0; i < 15; i++) {
-				currentAlbum[i] = data.albums.items[i];
-				currentAlbum.cover = data.albums.items[i].images[1].url;
-				currentAlbum.num = data.albums.items[i].id;
+			var numAlbums = (data.items.length);
+			for (var i = 0; i < numAlbums; i++) {
+				currentAlbum[i] = data.items[i];
+				currentAlbum.cover = data.items[i].images[1].url;
+				currentAlbum.name = data.items[i].name;
+				currentAlbum.num = data.items[i].id;
 
-				if (i > 0) {
-					if (previousAlbum == currentAlbum[i]) {
-					}
-					else {
-						albumImgUrlArray.push([currentAlbum.cover, currentAlbum.num])
-						previousAlbum = currentAlbum[i];
-					}
-				}
-				else {
+				if ((currentAlbum.name).search("Deluxe") < 1) {
 					albumImgUrlArray.push([currentAlbum.cover, currentAlbum.num]);
 					previousAlbum = currentAlbum[i];
 				}
@@ -95,12 +104,13 @@ $( window ).load(function() {
 			var domColor = colorThief.getColor(imgObject);
 
 			$('#colorContainer' + k + '.img-color').css('background-color', 'rgb(' + domColor[0] + ',' + domColor[1] + ',' + domColor[2] + ')');  // display the dominant color
-			$('.songContainer').css('background-color', 'rgb(' + domColor[0] + ',' + domColor[1] + ',' + domColor[2] + ')'); // load dom color bg for modal
-			$('#albumContainer' + k).addClass('album-img-wrapper').append('<img src="' + imgObject.src + '" title="' + imgObject.num + '"></img>');
+			$('#songContainer').css('background-color', 'rgb(' + domColor[0] + ',' + domColor[1] + ',' + domColor[2] + ')'); // load dom color bg for modal
+			$('#albumContainer' + k).addClass('album-img-wrapper').append('<img src="' + imgObject.src + '" title="' + imgObject.num + '" class="cover"></img>');
 
 		};
 
 		$('img').click(function() {
+			console.log(this.title);
 			getSongs(this.title);
 		});
 
