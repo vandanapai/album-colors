@@ -130,8 +130,11 @@ $( window ).load(function() {
 		};
 
 		$('img').click(function() {
+			var bgColor = $(this).parent().parent()[0].style.backgroundColor;
+			$('#songContainer').append(this).css('background-color', bgColor);
 			console.log(this.dataset.albumNum);
 			getSongs(this.dataset.albumNum);
+			$('#songContainer').show();
 		});
 
 	};
