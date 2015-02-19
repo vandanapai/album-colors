@@ -1,16 +1,28 @@
 $( window ).load(function() {
 
-	var albumImgUrlArray = [];
+	$('form').submit(function (event) {
+		event.preventDefault();
+		var userQuery = $('.search-query').val();
+		searchArtist(userQuery);
+	});
+
+	// User provides a search query, get the primary artist ID from Spotify search results
 
 	function searchArtist(query) {
 		$.ajax ({
 			type: "GET",
 			url: "https://api.spotify.com/v1/search",
+			cache: false,
 			data: {
 				q: query,
 				type: 'artist'
 			},
 			success: function(results) {
+				albumImgUrlArray.length = 0; /* following variables are all reset to clear stored data from previous query */
+				images.length = 0;
+				numImgLoaded = 0;
+				console.log(query);
+				$('#mainContainer').html(""); /* reset entire page and clear divs */
 				console.log(results);
 				var artistID = results.artists.items[0].id;
 				console.log(artistID);
@@ -19,10 +31,13 @@ $( window ).load(function() {
 		});
 	};
 
+	// Get artists albums data
+
 	function getArtistAlbums(id) {
 		$.ajax ({
 			type: "GET",
 			url: "https://api.spotify.com/v1/artists/" + id + "/albums?album_type=album&market=US",
+			cache: false,
 			dataType: "JSON",
 			success: function (albums) {
 				console.log(albums);
@@ -31,13 +46,11 @@ $( window ).load(function() {
 		});
 	};
 
-	$('form').submit(function (event) {
-		event.preventDefault();
-		var userQuery = $('.search-query').val();
-		searchArtist(userQuery);
-	});
+	// From JSON, get each album's cover image
 
 	var currentAlbum = new Object;
+	var albumImgUrlArray = [];
+	console.log(albumImgUrlArray);
 
 	function getAlbumCovers(data) {
 			var numAlbums = (data.items.length);
@@ -52,14 +65,17 @@ $( window ).load(function() {
 					previousAlbum = currentAlbum[i];
 				}
 			}
-
+			console.log("array length is" + albumImgUrlArray.length);
 			loadAlbumImg(albumImgUrlArray);
 
 	}
 
 
+	// Prior to getting color, preload all album images
+
 	var images = [];
 	var numImgLoaded = 0;
+
 
 	function loadAlbumImg(array) {
 
@@ -85,11 +101,15 @@ $( window ).load(function() {
 
 	function counter() {
 		numImgLoaded++;
+		console.log("num images loaded is " + numImgLoaded);
 		if (numImgLoaded == albumImgUrlArray.length) {
+			console.log("making the boxes now");
 			colorizeContainer(images);
 		}
 	}
 
+	// Once all images have been loaded, find the dominant color of the album cover image and add it as the background color of 
+	// its own div and load the album cover image on top
 
 	function colorizeContainer(data) {
 
@@ -98,6 +118,7 @@ $( window ).load(function() {
 			var imgObject = data[k];
 
 			$('#mainContainer').append('<div id="colorContainer' + k + '"></div>'); // create a new square div for the color
+			console.log("new color box");
 			$('#colorContainer' + k).addClass('img-color').append('<div id="albumContainer' + k + '"></div>');
 
 			var colorThief = new ColorThief();
@@ -122,7 +143,8 @@ $( window ).load(function() {
 			url: "https://api.spotify.com/v1/albums/" + id + "/tracks",
 			dataType: "JSON",
 			success: function (songs) {
-				console.log(songs);
+				var albumSongs = songs.items;
+				console.log(albumSongs);
 			}
 		});
 	}
