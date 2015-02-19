@@ -125,14 +125,13 @@ $( window ).load(function() {
 			var domColor = colorThief.getColor(imgObject);
 
 			$('#colorContainer' + k + '.img-color').css('background-color', 'rgb(' + domColor[0] + ',' + domColor[1] + ',' + domColor[2] + ')');  // display the dominant color
-			$('#songContainer').css('background-color', 'rgb(' + domColor[0] + ',' + domColor[1] + ',' + domColor[2] + ')'); // load dom color bg for modal
-			$('#albumContainer' + k).addClass('album-img-wrapper').append('<img src="' + imgObject.src + '" title="' + imgObject.num + '" class="cover"></img>');
+			$('#albumContainer' + k).addClass('album-img-wrapper').append('<img src="' + imgObject.src + '" data-album-num="' + imgObject.num + '" class="cover"></img>');
 
 		};
 
 		$('img').click(function() {
-			console.log(this.title);
-			getSongs(this.title);
+			console.log(this.dataset.albumNum);
+			getSongs(this.dataset.albumNum);
 		});
 
 	};
@@ -143,10 +142,18 @@ $( window ).load(function() {
 			url: "https://api.spotify.com/v1/albums/" + id + "/tracks",
 			dataType: "JSON",
 			success: function (songs) {
+				$('#songList').html("");
 				var albumSongs = songs.items;
-				console.log(albumSongs);
+				displaySongs(albumSongs);
+				
 			}
 		});
+	}
+
+	function displaySongs(albumSongs) {
+		for (var m = 0; m < albumSongs.length; m++) {
+			$('#songList').append('<li>' + albumSongs[m].name + '</li>');
+		}
 	}
 
 });
