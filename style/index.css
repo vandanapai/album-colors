@@ -8,10 +8,72 @@
     box-sizing: border-box; 
     }
 
+ body {
+ 	background-color: #F0F0F0;
+ 	font-family: 'Ubuntu', sans-serif;
+ }
+
+.body-container {
+	position: relative;
+}
+
 .container {
 	height: 100%;
 	width: 100%;
 	margin: 0 auto;
+}
+
+.form-container {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+
+}
+
+.main-search-box {
+	position: absolute;
+  	margin: -75px 0 0 -400px;
+	width: 800px;
+	height: 150px;
+	top: 50%;
+	left: 50%;
+}
+
+
+.main-search-box input {
+	outline: none;
+}
+
+.main-search-box input::-webkit-input-placeholder {
+  font-weight: 400;
+  color: #B0B0B0;
+  opacity: 1.0;
+}
+
+.main-search-box input#query {
+	width: 700px;
+	height: 100px;
+	background: transparent;
+	color: #FF6666;
+	border: none;
+	border-bottom: 5px solid #B0B0B0;
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 50px;
+	font-weight: 700;
+	letter-spacing: 2px;
+
+}
+
+.main-search-box input#searchButton {
+	height: 50px;
+	width: 50px;
+	background: none;
+	border: none;
+	padding: 0px 10px 0px 10px;
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 50px;
+	letter-spacing: 2px;
+	background: url('../img/magnifier.svg');
 }
 
 .img-color {
@@ -56,12 +118,15 @@
 .album-songs-container {
 	min-height: 100%;
 	min-width: 100%;
-	background-color: grey;
 	position: absolute;
 	top: 0;
 	display: none;
+	color: white;
 }
 
+.full-view {
+	margin: 0 auto;
+}
 
 
 /*.album-img-wrapper:before {    

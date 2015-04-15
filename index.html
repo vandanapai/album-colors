@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="style/index.css">
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css'>
 <script src="js/quantize.js"></script>
 <script src="js/color-thief.js"></script>
 <script src="js/album-colors.js"></script>
@@ -17,30 +18,33 @@
 </head>
 
 <body>
-
-<form id="search-form">
-	<input type="text" id="query" value="" class="search-query" />
-	<input type="submit" id="search" class="search-button" value="Search" />
-</form>
-
-
-
-<div id="mainContainer" class="container">
-<!-- 	<div id="colorContainer" class="img-color">
-		<img></img>
-	</div> -->
-</div>
-
-<div id="songContainer" class="album-songs-container">
-	<div id="fullViewAlbumContainer">
-
+<div class="bodyContainer" class="body-container"> 
+	<div class="form-container">
+		<form id="search-form" class="main-search-box">
+			<input type="text" id="query" value="" class="search-query" placeholder="enter artist name"/>
+			<input type="submit" id="searchButton" class="search-button" value="" />
+		</form>
 	</div>
 
-	<ul id="songList">
 
-	</ul>
+
+
+	<div id="mainContainer" class="container">
+	<!-- 	<div id="colorContainer" class="img-color">
+			<img></img>
+		</div> -->
+	</div>
+
+	<div id="songContainer" class="album-songs-container">
+		<div id="fullViewAlbumContainer">
+
+		</div>
+
+		<ul id="songList">
+
+		</ul>
+	</div>
 </div>
-
 
 <!-- <div id="imgContainer" class="img-container">
 	<div class="loaded-img">

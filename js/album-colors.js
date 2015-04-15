@@ -131,10 +131,10 @@ $( window ).load(function() {
 
 		$('img').click(function() {
 			var bgColor = $(this).parent().parent()[0].style.backgroundColor;
-			$('#songContainer').append(this).css('background-color', bgColor);
+			$('#fullViewAlbumContainer').append(this);
 			console.log(this.dataset.albumNum);
 			getSongs(this.dataset.albumNum);
-			$('#songContainer').show();
+			$('#songContainer').css('background-color', bgColor).show();
 		});
 
 	};
