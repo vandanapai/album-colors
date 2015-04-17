@@ -73,7 +73,7 @@
 	font-family: 'Ubuntu', sans-serif;
 	font-size: 50px;
 	letter-spacing: 2px;
-	background: url('../img/magnifier.svg');
+/*	background: url('../img/magnifier.svg');*/
 }
 
 .img-color {
@@ -93,12 +93,9 @@
 	width: 100%;
 }
 
-
-
 .img-color:hover {
 	opacity: .9;
 }
-
 
 .album-img-wrapper {
 	position: absolute;

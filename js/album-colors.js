@@ -3,8 +3,19 @@ $( window ).load(function() {
 	$('form').submit(function (event) {
 		event.preventDefault();
 		var userQuery = $('.search-query').val();
+		resize();
 		searchArtist(userQuery);
 	});
+
+	function resize() {
+		$('.form-container').css({
+			'height': 100,
+			'position': 'inherit'});
+		$('.main-search-box').css({
+			'margin': 0, 
+			'top': 0,
+			'left': 0});
+	}
 
 	// User provides a search query, get the primary artist ID from Spotify search results
 
