@@ -133,7 +133,7 @@
     height: 100%;
 }*/
 
-/*.close-button {
+.close-button {
 	position: absolute;
 	right: 8px;
 	top: 8px;
@@ -144,4 +144,3 @@
 	color: #fff;
 	cursor: pointer;
 }
-*/

@@ -142,13 +142,18 @@ $( window ).load(function() {
 
 		$('img').click(function() {
 			var bgColor = $(this).parent().parent()[0].style.backgroundColor;
-			$('#fullViewAlbumContainer').append(this);
+			$('#fullViewAlbumContainer').children('img:first').remove();
+			$(this).clone().appendTo('#fullViewAlbumContainer');
 			console.log(this.dataset.albumNum);
 			getSongs(this.dataset.albumNum);
 			$('#songContainer').css('background-color', bgColor).show();
 		});
 
 	};
+
+	$('.close-button').click(function() {
+		$('#songContainer').hide();
+	})
 
 	function getSongs(id) {
 		$.ajax ({
